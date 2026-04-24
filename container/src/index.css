@@ -1,0 +1,4 @@
+/* Diretivas do Tailwind CSS — geram todas as classes utilitárias usadas neste app */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
