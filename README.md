@@ -1,6 +1,6 @@
 # UFood 🍕
 
-App de pedido para um único restaurante (estilo iFood) construído com **Micro Frontends** usando **Webpack Module Federation** e **Tailwind CSS**.
+App de pedido para um único restaurante construído com **Micro Frontends** usando **Webpack Module Federation** e **Tailwind CSS**.
 
 ---
 
