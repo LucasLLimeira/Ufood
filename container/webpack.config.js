@@ -2,12 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 
-module.exports = {
+module.exports = (env = {}) => {
+  const isProd = Boolean(env.production);
+
+  return {
   // Ponto de entrada assíncrono — necessário para o Module Federation negociar
   // a versão dos módulos compartilhados antes de carregar qualquer código React
   entry: './src/index.js',
 
-  mode: 'development',
+  mode: isProd ? 'production' : 'development',
 
   devServer: {
     static: path.join(__dirname, 'public'),
@@ -17,7 +20,7 @@ module.exports = {
   },
 
   output: {
-    publicPath: 'http://localhost:3000/',
+    publicPath: 'auto',
     clean: true,
   },
 
@@ -54,8 +57,12 @@ module.exports = {
       name: 'container',
       // Declara os remotes: nome_local → nome_remoto@URL_do_remoteEntry
       remotes: {
-        cardapio: 'cardapio@http://localhost:3001/remoteEntry.js',
-        pedido: 'pedido@http://localhost:3002/remoteEntry.js',
+        cardapio: isProd
+          ? 'cardapio@/cardapio/remoteEntry.js'
+          : 'cardapio@http://localhost:3001/remoteEntry.js',
+        pedido: isProd
+          ? 'pedido@/pedido/remoteEntry.js'
+          : 'pedido@http://localhost:3002/remoteEntry.js',
       },
       // Compartilha React como singleton para garantir uma única instância
       // mesmo com múltiplos micros carregados em paralelo
@@ -68,4 +75,5 @@ module.exports = {
       template: './public/index.html',
     }),
   ],
+  };
 };

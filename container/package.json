@@ -4,7 +4,7 @@
   "description": "App container principal do UFood — orquestra os micro frontends",
   "scripts": {
     "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --env production --mode production"
   },
   "dependencies": {
     "react": "^18.2.0",

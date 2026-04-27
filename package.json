@@ -1,0 +1,12 @@
+{
+  "name": "ufood",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:cardapio && npm run build:pedido && npm run build:container && npm run copy:micros",
+    "build:cardapio": "cd micro-cardapio && npm install && npm run build",
+    "build:pedido": "cd micro-pedido && npm install && npm run build",
+    "build:container": "cd container && npm install && npm run build",
+    "copy:micros": "node scripts/copy-micros.js"
+  }
+}

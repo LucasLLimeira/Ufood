@@ -2,12 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 
-module.exports = {
+module.exports = (env = {}) => {
+  const isProd = Boolean(env.production);
+
+  return {
   // Ponto de entrada assíncrono — necessário para o Module Federation negociar
   // a versão dos módulos compartilhados antes de carregar qualquer código React
   entry: './src/index.js',
 
-  mode: 'development',
+  mode: isProd ? 'production' : 'development',
 
   devServer: {
     static: path.join(__dirname, 'public'),
@@ -19,8 +22,8 @@ module.exports = {
   },
 
   output: {
-    // URL pública necessária para o container localizar o remoteEntry.js
-    publicPath: 'http://localhost:3001/',
+    // Em produção usa sub-caminho /cardapio/ para servir dentro do container
+    publicPath: isProd ? '/cardapio/' : 'http://localhost:3001/',
     clean: true,
   },
 
@@ -72,4 +75,5 @@ module.exports = {
       template: './public/index.html',
     }),
   ],
+  };
 };
